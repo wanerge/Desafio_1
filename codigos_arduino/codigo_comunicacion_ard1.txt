@@ -1,0 +1,31 @@
+#define valorbit 2
+#define reloj 3
+
+char valor = 0;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(valorbit, OUTPUT);
+  pinMode(reloj, OUTPUT);
+}
+
+void loop()
+{
+  if(Serial.available() > 0){
+    valor = Serial.read();
+    for(int i = 0; i < 8; i++){
+      if((valor & 1) == 1){
+        digitalWrite(valorbit, HIGH);
+      }
+      else{
+        digitalWrite(valorbit, LOW);
+      }
+      digitalWrite(reloj, HIGH);
+      delay(60);
+      digitalWrite(reloj, LOW);
+      valor /= 2;
+    }
+  }
+  delay(100);
+}

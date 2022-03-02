@@ -1,0 +1,53 @@
+#define lectura 2
+#define reloj 3
+
+char valor = 0, cont = 0;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(lectura, INPUT);
+  pinMode(reloj, INPUT);
+}
+
+void loop()
+{
+  if(digitalRead(reloj) == HIGH){
+    cont++;
+    if(digitalRead(lectura) == HIGH){
+      switch (cont){
+   		case 1:
+        	valor += 1;
+      	break;
+   		case 2:
+      		valor += 2;
+      	break;
+      	case 3:
+      		valor += 4;
+      	break;
+      	case 4:
+      		valor += 8;
+      	break;
+      	case 5:
+      		valor += 16;
+      	break;
+      	case 6:
+      		valor += 32;
+      	break;
+      	case 7:
+      		valor += 64;
+      	break;
+   		default:
+      		valor += 128;
+      	break;
+	  }
+    }
+    delay(60);
+  }
+  if(cont == 8){
+    cont = 0;
+    Serial.print("El caracter ingresado en el arduino 1 es: ");
+    Serial.println(valor);
+    valor = 0;
+  }
+}
